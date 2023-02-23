@@ -45,7 +45,7 @@ player_values = list()
 # function quit_images() will quit every image viewer app currently running using psutil processor id
 def quit_images():
     for proc in psutil.process_iter():
-        # Replace 'eog' by 'display' in Windows os
+        # Replace 'eog' by process name in Windows os
         if proc.name() == "eog":
             proc.kill()
 
@@ -61,11 +61,11 @@ def is_snake(current_player, players):
             # Rest of function is just GUI and sounds
             print("Player {} bites by snake :(.\ndown to {}.".format(current_player, player_move))
             snake_layer = Image.new(mode="RGBA", size=(520, 520), color="white")
-            snake_img = Image.open("snake.png")
+            snake_img = Image.open("img/snake.png")
             snake_layer.paste(snake_img, (0, 0), snake_img)
             snake_layer.show()
             # pause the game for 2 seconds
-            playsound("snake.wav")
+            playsound("sound/snake.wav")
             time.sleep(1)
             quit_images()
 
@@ -81,11 +81,11 @@ def is_ladder(current_player, players):
             # Rest of function is just GUI and sounds
             print("Player {} got the ladder :).\nUp to {}.".format(current_player, player_move))
             ladder_layer = Image.new(mode="RGBA", size=(520, 520), color="white")
-            ladder_img = Image.open("ladder.png")
+            ladder_img = Image.open("img/ladder.png")
             ladder_layer.paste(ladder_img, (0, 0), ladder_img)
             ladder_layer.show()
             # pause the game for 2 seconds
-            playsound("ladder.wav")
+            playsound("sound/ladder.wav")
             time.sleep(1)
             quit_images()
 
@@ -93,11 +93,11 @@ def is_ladder(current_player, players):
 # Main manu of game with GUI - sounds
 def game_board():
     # GUI and sounds
-    welcome = Image.open("welcome.png")
+    welcome = Image.open("img/welcome.png")
     board = Image.new(mode="RGBA", size=(1000, 1000), color="pink")
     board.paste(welcome, ((board.width - welcome.width) // 2, (board.height - welcome.height) // 2), welcome)
     board.show("Welcome To Snake And Ladders!!")
-    playsound("start-game.wav")
+    playsound("sound/start-game.wav")
     time.sleep(1)
     quit_images()
     # Main Menu is here
@@ -125,7 +125,7 @@ def game_board():
     elif option == "4":
         # GUI and sounds
         bye_layer = Image.new(mode="RGBA", size=(512, 512), color="pink")
-        bye_img = Image.open("bye.png")
+        bye_img = Image.open("img/bye.png")
         bye_layer.paste(bye_img, (0, 0), bye_img)
         bye_layer.show()
         time.sleep(2)
@@ -174,12 +174,12 @@ def get_offset(player_number, players):
 
 # This function actually shows the current layer of players and stats.
 def update_game_board_gui(players):
-    player1 = Image.open("player-1.png")
-    player2 = Image.open("player-2.png")
-    player3 = Image.open("player-3.png")
+    player1 = Image.open("img/player-1.png")
+    player2 = Image.open("img/player-2.png")
+    player3 = Image.open("img/player-3.png")
     # If You Want To Play With CPU (ROBOT) Please Play This Game As 4-Player.
-    robot = Image.open("robot.png")
-    board = Image.open("board.jpg")
+    robot = Image.open("img/robot.png")
+    board = Image.open("img/board.jpg")
     if len(players) == 1:
         board.paste(player1, get_offset(1, players), player1)
     if len(players) == 2:
@@ -267,7 +267,7 @@ def game_start(players):
                     export_game(players)
                     # GUI for quit
                     bye_layer = Image.new(mode="RGBA", size=(512, 512), color="pink")
-                    bye_img = Image.open("bye.png")
+                    bye_img = Image.open("img/bye.png")
                     bye_layer.paste(bye_img, (0, 0), bye_img)
                     bye_layer.show()
                     time.sleep(2)
@@ -280,7 +280,7 @@ def game_start(players):
             p_move_prize = 0
             player_move = random.randint(1, 6)
             dice_layer = Image.new(mode="RGBA", size=(520, 520), color="white")
-            dice_img = Image.open(str(player_move) +".png")
+            dice_img = Image.open("img/" + str(player_move) +".png")
             dice_layer.paste(dice_img, (0, 0), dice_img)
             if player_move > 5:
                 p_move_prize = 1
@@ -296,7 +296,7 @@ def game_start(players):
                 if players[current_player][1] == 0 and player_move > 5:
                     players[current_player][1] += 1
                 else:
-                    playsound("move.wav")
+                    playsound("sound/move.wav")
                     players[current_player][1] += player_move
                 # checking for snake or ladder as player moves up
                 if players[current_player][1] in snake[0]:
